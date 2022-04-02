@@ -1,0 +1,20 @@
+<form [formGroup]="listForm" (ngSubmit)="saveList()">
+    <h2 mat-dialog-title> {{action}} Book List</h2>
+    <div mat-dialog-content>
+        <mat-grid-list cols="1" rowHeight="55px" gutterSize="5px">
+            <mat-grid-tile>
+                <mat-form-field class="input-control">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="listForm.controls['name'].errors?.['required']">Title is Required</mat-error>
+                    <mat-error *ngIf="listForm.controls['name'].errors?.['maxlength']">Title must be less than 200
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button type="submit" mat-flat-button color="primary">{{action}}</button>
+        <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+    </div>
+</form>

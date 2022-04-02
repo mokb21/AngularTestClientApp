@@ -1,0 +1,46 @@
+<form [formGroup]="bookForm" (ngSubmit)="saveBook()">
+    <h2 mat-dialog-title> {{action}} Book</h2>
+    <div mat-dialog-content>
+        <mat-grid-list cols="2" rowHeight="55px" gutterSize="5px">
+
+            <mat-grid-tile>
+                <mat-form-field class="input-control">
+                    <mat-label>Title</mat-label>
+                    <input matInput formControlName="title" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="bookForm.controls['title'].errors?.['required']">Title is Required</mat-error>
+                    <mat-error *ngIf="bookForm.controls['title'].errors?.['maxlength']">Title must be less than 200</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="input-control">
+                    <mat-label>Author</mat-label>
+                    <input matInput formControlName="author" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="bookForm.controls['author'].errors?.['required']">Author is Required</mat-error>
+                    <mat-error *ngIf="bookForm.controls['author'].errors?.['maxlength']">Author must be less than 200</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="input-control">
+                    <mat-label>Year</mat-label>
+                    <input matInput [matDatepicker]="bookDate" formControlName="date" [errorStateMatcher]="matcher">
+                    <mat-datepicker-toggle matSuffix [for]="bookDate"></mat-datepicker-toggle>
+                    <mat-datepicker #bookDate></mat-datepicker>
+                    <mat-error *ngIf="bookForm.controls['date'].errors?.['required']">Year is Required</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="input-control">
+                    <mat-label>Rank</mat-label>
+                    <input matInput type="number" formControlName="rank" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="bookForm.controls['rank'].errors?.['required']">Rank is Required</mat-error>
+                    <mat-error *ngIf="bookForm.controls['rank'].errors?.['min']">Rank must be greater than 0</mat-error>
+                    <mat-error *ngIf="bookForm.controls['rank'].errors?.['max']">Rank must be less than 5</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button type="submit" mat-flat-button color="primary">{{action}}</button>
+        <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+    </div>
+</form>

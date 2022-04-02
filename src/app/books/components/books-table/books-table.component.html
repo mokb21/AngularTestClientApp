@@ -1,0 +1,66 @@
+<div *ngIf="selectedBookList==null">
+    <h2 id="nothingSelectedlbl">Please select a list to check the books</h2>
+</div>
+
+<div *ngIf="selectedBookList!=null">
+    <table width="100%">
+        <tr>
+            <td>
+                <label>{{selectedBookList.name}}</label>
+            </td>
+            <td>
+                <button *ngIf="selectedBookList!=null" mat-flat-button (click)="openBookDialog({})" id="newBook">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field class="input-control">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+
+
+    <table mat-table [dataSource]="dataSource" matSort width="100%">
+
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Year </th>
+            <td mat-cell *matCellDef="let element"> {{element.date|date:'yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="author">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Author </th>
+            <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Rank </th>
+            <td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element" class="float-right">
+                <button mat-flat-button (click)="openBookDialog(element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-flat-button (click)="openDeleteDialog(element)">
+                    <mat-icon color="warn">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>
