@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://localhost:44337',
+  apiUrl: 'http://mhdtest-001-site1.ctempurl.com',
 };

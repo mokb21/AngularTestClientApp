@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:44337',
+  apiUrl: 'http://mhdtest-001-site1.ctempurl.com',
 };
 
 /*
