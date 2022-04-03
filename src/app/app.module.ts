@@ -32,6 +32,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ListsTableComponent } from './books/components/lists-table/lists-table.component';
 import { BookListDialogBoxComponent } from './books/components/book-list-dialog-box/book-list-dialog-box.component';
+import { StarsRankComponent } from './shared/components/stars-rank/stars-rank.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { BookListDialogBoxComponent } from './books/components/book-list-dialog-
     BookDialogBoxComponent,
     ListsTableComponent,
     BookListDialogBoxComponent,
+    StarsRankComponent,
   ],
   imports: [
     BrowserModule,
