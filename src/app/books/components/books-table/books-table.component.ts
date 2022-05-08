@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,18 +11,19 @@ import { BookDialogBoxComponent } from '../book-dialog-box/book-dialog-box.compo
 import { DeleteConfirmationComponent } from 'src/app/shared/components/delete-confirmation/delete-confirmation.component';
 import { SharedService } from 'src/app/shared/services/shared.service';
 import { BooksListService } from '../../services/book-lists.service';
-import { UUID } from 'angular2-uuid';
 import { BookList } from '../../core/classes/book-list.class';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-books-table',
   templateUrl: './books-table.component.html',
   styleUrls: ['./books-table.component.scss']
 })
-export class BooksTableComponent implements OnInit {
+export class BooksTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['title', 'date', 'author', 'rank', 'action'];
   dataSource = new MatTableDataSource<Book>();
   selectedBookList!: BookList;
+  private _getNewListSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -37,8 +38,12 @@ export class BooksTableComponent implements OnInit {
     this._listenOnListIdChange();
   }
 
+  ngOnDestroy():void{
+    this._getNewListSubscription.unsubscribe();
+  }
+
   private _listenOnListIdChange(): void {
-    this._sharedService.getNewList().subscribe(list => this._getBooksByListId(list));
+    this._getNewListSubscription = this._sharedService.getNewList().subscribe(list => this._getBooksByListId(list));
   }
 
   private _getBooksByListId(list: BookList): void {
